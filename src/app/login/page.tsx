@@ -1,32 +1,22 @@
-/* eslint-disable react/jsx-props-no-spreading */
-
 'use client';
 
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import { ModalContext } from '@/contexts/modal-provider';
+import { ModalContext } from '@/modal/modal-provider';
 
 export default function Login() {
-  const { show, hide } = useContext(ModalContext);
+  const { state, dispatch } = useContext(ModalContext);
 
   const router = useRouter();
   const { register, handleSubmit, formState } = useForm();
 
-  const onSubmit = data => {
+  const onSubmit = (data: any) => {
     if (data.id === 'helloworld' && data.pwd === 'Qwer!234') {
       console.log('로그인 성공');
       router.push('/');
     } else {
-      console.log('d');
-      show({
-        title: '회원가입 실패',
-        description: '아이디 또는 비밀번호 오류입니다.',
-        useCancelButton: false,
-        confirmCallback: () => {
-          hide();
-        },
-      });
+      dispatch({ type: 'LOGIN_FAIL' });
     }
   };
 
@@ -45,12 +35,11 @@ export default function Login() {
           required: '아이디는 필수 입력값입니다.',
         })}
       />
-      {errors.id && errors.id.message}
+      {errors.id && errors.id.message?.toString()}
       <input
         className="h-8"
         placeholder="Password"
         type="password"
-        // eslint-disable-next-line react/jsx-props-no-spreading
         {...register('pwd', {
           required: '비밀번호는 필수 입력값입니다.',
           minLength: { value: 8, message: '8자 이상 입력해주세요.' },
@@ -65,10 +54,10 @@ export default function Login() {
           },
         })}
       />
-      {errors.pwd && errors.pwd.message}
+      {errors.pwd && errors.pwd.message?.toString()}
 
       <button
-        className="border rounded-md border-slate-300 p-3 text-white bg-current bg-blue-600"
+        className="border rounded-md border-slate-300 p-3 text-white bg-blue-600"
         type="submit"
       >
         LOGIN

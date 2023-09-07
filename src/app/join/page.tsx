@@ -1,18 +1,18 @@
 'use client';
 
-import { useState, useRef, useContext } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { ModalContext } from '@/contexts/modal-provider';
+import { ModalContext } from '@/modal/modal-provider';
 
 export default function Join() {
-  const { show, hide } = useContext(ModalContext);
+  const { state, dispatch } = useContext(ModalContext);
   const router = useRouter();
 
-  const inputPassword = useRef(null);
-  const inputEmail = useRef(null);
-  const inputId = useRef(null);
+  const inputPassword = useRef<any>(null);
+  const inputEmail = useRef<any>(null);
+  const inputId = useRef<any>(null);
 
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
@@ -29,7 +29,6 @@ export default function Join() {
   const checkEmail = () => {
     const reg = /^[A-Z0-9+_.-]+@[A-Z0-9.-]+$/i;
     if (reg.test(email)) return true;
-
     return false;
   };
 
@@ -50,14 +49,7 @@ export default function Join() {
     if (id.length === 0) {
       inputId.current.focus();
       chk = false;
-      show({
-        title: '회원가입 실패',
-        description: '아이디를 입력해주세요.',
-        useCancelButton: false,
-        confirmCallback: () => {
-          hide();
-        },
-      });
+      dispatch({ type: 'JOIN_FAIL', payload: '아이디를 입력해주세요.' });
     }
     if (
       password.length < 8 ||
@@ -67,27 +59,16 @@ export default function Join() {
     ) {
       inputPassword.current.focus();
       chk = false;
-      show({
-        title: '회원가입 실패',
-        description:
+      dispatch({
+        type: 'JOIN_FAIL',
+        payload:
           '비밀번호는 소문자, 대문자, 특수문자 포함 8자 이상으로 이루어져야 합니다.',
-        useCancelButton: false,
-        confirmCallback: () => {
-          hide();
-        },
       });
     }
     if (!checkEmail()) {
       inputEmail.current.focus();
       chk = false;
-      show({
-        title: '회원가입 실패',
-        description: '이메일 형식이 아닙니다.',
-        useCancelButton: false,
-        confirmCallback: () => {
-          hide();
-        },
-      });
+      dispatch({ type: 'JOIN_FAIL', payload: '이메일 형식이 아닙니다.' });
     }
     if (chk) {
       console.log('회원가입 성공');
@@ -95,15 +76,15 @@ export default function Join() {
     }
   };
 
-  const onChangeId = e => {
+  const onChangeId = (e: React.ChangeEvent<any>) => {
     setId(e.target.value);
   };
 
-  const onChangePassword = e => {
+  const onChangePassword = (e: React.ChangeEvent<any>) => {
     setPassword(e.target.value);
   };
 
-  const onChangeEmail = e => {
+  const onChangeEmail = (e: React.ChangeEvent<any>) => {
     setEmail(e.target.value);
   };
 
