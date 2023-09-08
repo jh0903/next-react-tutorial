@@ -3,7 +3,7 @@
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import { ModalContext } from '@/modal/modal-provider';
+import { ModalContext } from '@/components/modal-provider';
 
 export default function Login() {
   const { state, dispatch } = useContext(ModalContext);

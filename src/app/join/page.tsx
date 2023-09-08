@@ -4,7 +4,7 @@ import React, { useState, useRef, useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { ModalContext } from '@/modal/modal-provider';
+import { ModalContext } from '@/components/modal-provider';
 
 export default function Join() {
   const { state, dispatch } = useContext(ModalContext);
