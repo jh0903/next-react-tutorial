@@ -9,6 +9,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      width: {
+        192: '44rem',
+      },
       colors: {
         'my-color': '#00FF7F',
       },
