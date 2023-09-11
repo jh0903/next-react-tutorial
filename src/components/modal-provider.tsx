@@ -127,26 +127,12 @@ const initialState = { show: false };
 export default function ModalProvider({ children }: any) {
   const reducer = (state: Modal, action: any) => {
     switch (action.type) {
-      case 'LOGIN_FAIL':
+      case 'OPEN_MODAL':
         return {
           ...state,
           show: true,
-          title: '로그인 실패',
-          description: '아이디 또는 비밀번호 오류입니다.',
-          useCancelButton: false,
-          useConfirmButton: true,
-          confirmCallback: () => {
-            {
-              dispatch({ type: 'CLOSE_MODAL' });
-            }
-          },
-        };
-      case 'JOIN_FAIL':
-        return {
-          ...state,
-          show: true,
-          title: '회원가입 실패',
-          description: action.payload,
+          title: action.payload.title,
+          description: action.payload.description,
           useCancelButton: false,
           useConfirmButton: true,
           confirmCallback: () => {

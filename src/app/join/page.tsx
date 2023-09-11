@@ -49,7 +49,13 @@ export default function Join() {
     if (id.length === 0) {
       inputId.current.focus();
       chk = false;
-      dispatch({ type: 'JOIN_FAIL', payload: '아이디를 입력해주세요.' });
+      dispatch({
+        type: 'OPEN_MODAL',
+        payload: {
+          title: '회원가입 실패',
+          description: '아이디를 입력해주세요.',
+        },
+      });
     }
     if (
       password.length < 8 ||
@@ -60,15 +66,24 @@ export default function Join() {
       inputPassword.current.focus();
       chk = false;
       dispatch({
-        type: 'JOIN_FAIL',
-        payload:
-          '비밀번호는 소문자, 대문자, 특수문자 포함 8자 이상으로 이루어져야 합니다.',
+        type: 'OPEN_MODAL',
+        payload: {
+          title: '회원가입 실패',
+          description:
+            '비밀번호는 소문자, 대문자, 특수문자 포함 8자 이상으로 이루어져야 합니다.',
+        },
       });
     }
     if (!checkEmail()) {
       inputEmail.current.focus();
       chk = false;
-      dispatch({ type: 'JOIN_FAIL', payload: '이메일 형식이 아닙니다.' });
+      dispatch({
+        type: 'OPEN_MODAL',
+        payload: {
+          title: '회원가입 실패',
+          description: '이메일 형식이 아닙니다.',
+        },
+      });
     }
     if (chk) {
       console.log('회원가입 성공');

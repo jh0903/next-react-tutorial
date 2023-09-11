@@ -11,15 +11,34 @@ export default function CustomModal() {
 
         <p>{state.description}</p>
 
-        <button
-          type="button"
-          className="inline-block w-full"
-          onClick={() => {
-            state.confirmCallback && state.confirmCallback();
-          }}
-        >
-          {state.confirmButton ?? '확인'}
-        </button>
+        <div className="flex flex-row">
+          {state.useConfirmButton ? (
+            <button
+              type="button"
+              className="inline-block w-full"
+              onClick={() => {
+                state.confirmCallback && state.confirmCallback();
+              }}
+            >
+              {state.confirmButton ?? '확인'}
+            </button>
+          ) : (
+            <></>
+          )}
+          {state.useCancleButton ? (
+            <button
+              type="button"
+              className="inline-block w-full"
+              onClick={() => {
+                state.cancelCallback && state.cancelCallback();
+              }}
+            >
+              {state.cancelCallback ?? '취소'}
+            </button>
+          ) : (
+            <></>
+          )}
+        </div>
       </div>
 
       <div className="fixed top-0 left-0 w-full h-full bg-slate-500 z-0 opacity-50" />

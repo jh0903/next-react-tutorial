@@ -16,7 +16,13 @@ export default function Login() {
       console.log('로그인 성공');
       router.push('/');
     } else {
-      dispatch({ type: 'LOGIN_FAIL' });
+      dispatch({
+        type: 'OPEN_MODAL',
+        payload: {
+          title: '로그인 실패',
+          description: '아이디 또는 비밀번호 오류입니다.',
+        },
+      });
     }
   };
 
